@@ -15,29 +15,44 @@ let playerPosition = 50; // Starting position (percentage)
 
 // Function to reset the game
 function resetGame() {
-    // Remove game over display
+    // Fully stop the game and clear running timers/animations
+    gameRunning = false;
+
+    clearInterval(dropMaker);
+    clearInterval(harmfulDropMaker);
+    clearInterval(timerInterval);
+    dropMaker = null;
+    harmfulDropMaker = null;
+    timerInterval = null;
+
+    // Remove game over or victory displays
     const gameOver = document.querySelector('.game-over');
-    if (gameOver) {
-        gameOver.remove();
-    }
+    if (gameOver) gameOver.remove();
+
+    // Remove visual effects (confetti, flash)
+    document.querySelectorAll('.confetti, .flash-effect').forEach(el => el.remove());
 
     // Reset all variables
     score = 0;
     timeLeft = 120;
     dropSpeedMultiplier = 1;
     baseDropMultiplier = 1;
-    
+
     // Update displays
-    document.getElementById('score').textContent = '0';
-    document.getElementById('time').textContent = '120';
-    
+    const scoreEl = document.getElementById('score');
+    const timeEl = document.getElementById('time');
+    if (scoreEl) scoreEl.textContent = '0';
+    if (timeEl) timeEl.textContent = '120';
+
     // Remove any remaining drops
     const drops = document.querySelectorAll('.water-drop, .harmful-drop');
     drops.forEach(drop => drop.remove());
-    
-    // Reset player position
-    player.style.left = '50%';
-    playerPosition = 50;
+
+    // Reset player position (center)
+    if (player) {
+        player.style.left = '50%';
+        playerPosition = 50;
+    }
 }
 
 // Function to end the game with a loss
