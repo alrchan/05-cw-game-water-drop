@@ -6,6 +6,7 @@ let timerInterval; // Timer for countdown
 let timeLeft = 120; // Time in seconds
 let score = 0; // Track the score
 let dropSpeedMultiplier = 1; // Base speed multiplier
+let baseDropMultiplier = 1; // multiplier set by difficulty (easy/medium/hard)
 
 // Player movement variables
 const playerSpeed = 25; // Pixels to move per keypress
@@ -22,12 +23,13 @@ function resetGame() {
 
     // Reset all variables
     score = 0;
-    timeLeft = 30;
+    timeLeft = 120;
     dropSpeedMultiplier = 1;
+    baseDropMultiplier = 1;
     
     // Update displays
     document.getElementById('score').textContent = '0';
-    document.getElementById('time').textContent = '30';
+    document.getElementById('time').textContent = '120';
     
     // Remove any remaining drops
     const drops = document.querySelectorAll('.water-drop, .harmful-drop');
@@ -112,10 +114,13 @@ function updateTimer() {
 
 // Function to update drop speed based on score
 function updateDropSpeed() {
-    if (score === 30) {
-        dropSpeedMultiplier = 1.25; // 25% faster at score 30
-    } else if (score === 50) {
-        dropSpeedMultiplier = 1.5;  // Another 25% faster at score 50
+    // start with base multiplier determined by difficulty
+    dropSpeedMultiplier = baseDropMultiplier;
+    if (score >= 30) {
+        dropSpeedMultiplier = baseDropMultiplier * 1.25; // 25% faster at score 30
+    }
+    if (score >= 50) {
+        dropSpeedMultiplier = baseDropMultiplier * 1.5;  // Another 25% faster at score 50
     }
 }
 
@@ -253,7 +258,7 @@ function startGame() {
 
   // Reset score, speed and timer
   score = 0;
-  dropSpeedMultiplier = 1;
+    dropSpeedMultiplier = 1;
   timeLeft = 120;
   document.getElementById('score').textContent = '0';
   document.getElementById('time').textContent = '120';
@@ -262,6 +267,14 @@ function startGame() {
 
   // Show goal message
   showGoalMessage();
+
+    // Read difficulty selection and set base multiplier
+    const difficulty = document.querySelector('input[name="difficulty"]:checked')?.value || 'medium';
+    if (difficulty === 'easy') baseDropMultiplier = 0.8; // slower
+    else if (difficulty === 'hard') baseDropMultiplier = 1.25; // faster than medium
+    else baseDropMultiplier = 1; // medium
+    // apply base to current drop speed
+    dropSpeedMultiplier = baseDropMultiplier;
 
   // Start the timer
   timerInterval = setInterval(updateTimer, 1000);
