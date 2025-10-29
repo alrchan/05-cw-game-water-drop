@@ -239,6 +239,11 @@ function updateScore() {
 
 // Wait for button click to start the game
 document.getElementById("start-btn").addEventListener("click", startGame);
+// Attach reset button
+const resetBtn = document.getElementById('reset-btn');
+if (resetBtn) resetBtn.addEventListener('click', () => {
+    resetGame();
+});
 
 function showGoalMessage() {
     const goalMessage = document.createElement('div');
