@@ -176,13 +176,16 @@ h1, h2, h3, h4, h5, h6 {
 
 #player {
     position: absolute;
-    bottom: 20px;
-    left: calc(50% - 50px);  /* 50px is half the width of the player */
-    width: 100px;
-    height: 20px;
-    background-color: #333333;
-    border-radius: 4px;
-    transition: left 0.1s ease-out;
+    bottom: 10px;
+    left: calc(50% - 40px);  /* center based on 80px width */
+    width: 80px;
+    height: 80px;
+    background-image: url('img/water-can.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    transition: left 0.1s ease-out, transform 0.1s ease;
+    z-index: 50; /* stay above drops */
 }
 
 .flash-effect {
@@ -305,3 +308,25 @@ h1, h2, h3, h4, h5, h6 {
     text-decoration: none;
 }
 .site-footer a:hover { text-decoration: underline; }
+
+/* Charity logo in top-right corner */
+#charity-logo-link {
+    position: fixed;
+    top: 14px;
+    right: 14px;
+    z-index: 2000; /* above other UI */
+    display: block;
+}
+
+#charity-logo {
+    width: 110px; /* small and unobtrusive */
+    height: auto;
+    opacity: 0.9;
+    transition: opacity 0.18s ease, transform 0.18s ease;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.12));
+}
+
+#charity-logo:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+}
