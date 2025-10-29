@@ -18,6 +18,20 @@ Fonts:
 
 */
 
+/*
+ * Local Avenir @font-face (place font files in ./fonts/)
+ * Note: Avenir is a commercial font — ensure you have the license to host it.
+ */
+@font-face {
+    font-family: 'Avenir';
+    src: url('/Users/myapple/Downloads/cnit131/05-cw-game-water-drop/fonts/AvenirNext-Medium.woff') format('woff2'),
+         url('/Users/myapple/Downloads/cnit131/05-cw-game-water-drop/fonts/AvenirNext-Medium.woff2') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+
 * {
     margin: 0;
     padding: 0;
@@ -30,7 +44,19 @@ body {
     align-items: center;
     min-height: 100vh;
     background-color: #f0f0f0;
-    font-family: 'Nunito', 'Helvetica Neue', Arial, sans-serif;
+    /* Prefer Avenir Medium if available; fall back to Nunito then system fonts */
+    font-family: 'Avenir', 'Avenir Next', 'Nunito', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 500; /* medium */
+}
+
+/* Ensure UI elements inherit medium weight */
+button, input, select, textarea {
+    font-family: inherit;
+    font-weight: 500;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 500;
 }
 
 .game-wrapper {
